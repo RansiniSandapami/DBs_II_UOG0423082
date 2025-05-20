@@ -1,0 +1,10 @@
+CREATE OR REPLACE PROCEDURE delete_product(pid INT)
+LANGUAGE plpgsql
+AS 
+    BEGIN
+        DELETE FROM products
+        WHERE product_id = pid;
+    END;
+;
+
+CALL delete_product(3);

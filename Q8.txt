@@ -1,0 +1,20 @@
+CREATE OR REPLACE PROCEDURE calculate_total_stock_value_of_product(pid INT)
+LANGUAGE plpgsql
+AS 
+    DECLARE
+        price NUMERIC;
+        quantity INT;
+        total_value NUMERIC;
+    BEGIN
+        SELECT price, stock_quantity
+        INTO price, quantity
+        FROM products
+        WHERE product_id = pid;
+    
+        total_value := price * quantity;
+    
+        RAISE NOTICE 'Total stock value for product 
+    END;
+;
+
+CALL calculate_total_stock_value_of_product(1);

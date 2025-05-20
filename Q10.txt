@@ -1,0 +1,25 @@
+CREATE OR REPLACE PROCEDURE check_stock_category(pid INT)
+LANGUAGE plpgsql
+AS 
+    DECLARE
+        qty INT;
+        category TEXT;
+    BEGIN
+        – Get the stock quantity for the product
+        SELECT stock_quantity INTO qty
+        FROM products
+        WHERE product_id = pid;
+    
+        – Determine category using CASE
+        category := CASE
+            WHEN qty < 10 THEN 'Low Stock'
+            WHEN qty BETWEEN 10 AND 50 THEN 'Moderate Stock'
+            ELSE 'High Stock'
+        END;
+    
+        – Display the result
+        RAISE NOTICE 'Stock Category for Product ID 
+    END;
+;
+
+CALL check_stock_level(1);

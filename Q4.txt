@@ -1,0 +1,14 @@
+CREATE DATABASE ABXCompany;
+
+\c ABXCompany
+
+CREATE TABLE products (
+    product_id INTGENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT,
+    price NUMERIC(10, 2),
+    stock_quantity INT
+);
+
+INSERT INTO products(name, price, stock_quantity) VALUES ('Laptop', 1200.00, 10);
+
+SELECT * FROM products;

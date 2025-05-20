@@ -1,0 +1,17 @@
+CREATE OR REPLACE PROCEDURE get_product_by_id(
+    pid INT,
+    OUT pname TEXT,
+    OUT pprice NUMERIC,
+    OUT pstock INT
+)
+LANGUAGE plpgsql
+AS 
+    BEGIN
+        SELECT name, price, stock_quantity
+        INTO pname, pprice, pstock
+        FROM products
+        WHERE product_id = pid;
+    END;
+;
+
+CALL get_product_by_id(1);

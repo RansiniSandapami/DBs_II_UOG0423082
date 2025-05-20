@@ -1,0 +1,14 @@
+CREATE OR REPLACE PROCEDURE update_product_stock(
+    pid INT,
+    new_stock INT
+)
+LANGUAGE plpgsql
+AS 
+    BEGIN
+        UPDATE products
+        SET stock_quantity = new_stock
+        WHERE product_id = pid;
+    END;
+;
+
+CALL update_product_stock(1, 50);

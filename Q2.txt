@@ -1,0 +1,16 @@
+CREATE  OR REPLACE PROCEDURE return_full_name(first_name VARCHAR(10), last_name VARCHAR(10), OUT full_name VARCHAR(25))
+LANGUAGE plpgsql
+AS $$
+BEGIN
+full_name := first_name || ' ' || last_name;
+END;
+$$;
+
+DO $$
+DECLARE
+name VARCHAR (25);
+BEGIN
+call return_full_name ('Ransini', 'Sandapami',name);
+RAISE NOTICE 'full name is %', name;
+END;
+$$;

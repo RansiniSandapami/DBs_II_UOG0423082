@@ -1,0 +1,12 @@
+CREATE PROCEDURE add_numbers (num1 INT, num2 INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+sum INT;
+BEGIN
+sum := num1 +num2;
+RAISE NOTICE 'Total is %', sum;
+END;
+$$;
+
+call add_numbers(20,30);
