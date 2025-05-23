@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION is_even(num INT)
+RETURNS BOOLEAN 
+LANGUAGE plpgsql
+AS $$
+DECLARE
+   is_even_result BOOLEAN;
+BEGIN
+ IF num % 2 = 0 THEN
+   is_even_result := TRUE;
+  ELSE
+   is_even_result := FALSE;
+END IF;
+RETURN  is_even_result;
+END;
+$$;
+SELECT is_even(6);

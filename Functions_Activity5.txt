@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION get_stock(p_id INT)
+RETURNS INT
+LANGUAGE plpgsql
+AS $$
+DECLARE stock_quantity int;
+BEGIN
+SELECT p.stock_quantity into stock_quantity 
+FROM product p
+where p.product_id=p_id;
+return stock_quantity;
+END;
+$$;
+SELECT p.stock_quantity into stock_quantity 
+FROM product p
+where p.product_id=p_id;

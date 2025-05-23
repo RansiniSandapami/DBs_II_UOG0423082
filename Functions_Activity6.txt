@@ -1,0 +1,19 @@
+CREATE OR REPLACE FUNCTION get_product_name(p_id INT)
+RETURNS VARCHAR
+LANGUAGE plpgsql
+AS $$
+    DECLARE
+      product_name VARCHAR;
+    BEGIN
+      SELECT name INTO product_name
+      FROM product
+      WHERE product_id = p_id;
+    
+      IF product_name IS NULL THEN
+        RAISE EXCEPTION 'Product with ID 
+      END IF;
+    
+      RETURN product_name;
+    END;
+   $$;
+   SELECT get_product_name(101);

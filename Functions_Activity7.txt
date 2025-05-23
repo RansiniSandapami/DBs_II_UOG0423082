@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION calculate_stock_value(pid INT)
+RETURNS DECIMAL (10,2)
+LANGUAGE plpgsql
+AS $$
+DECLARE total_stock_value DECIMAL(10,2);
+BEGIN
+   SELECT price * stock_quantity INTO total_stock_value
+   FROM product
+   WHERE product_id = p_id;
+
+IF total_stock_value IS NULL THEN
+  RAISE EXCEPTION 'Product with ID % does not exist.', product_id;
+END IF;
+END;
+$$;
