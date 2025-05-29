@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION insert_product_log()
+RETURNS TRIGGER 
+ LANGUAGE plpgsql
+AS $$
+BEGIN
+insert into product_log(action, action_time)
+values ('INSERT' , CURRENT_TIMESTAMP);
+return NEW;
+END
+$$;
+
+CREATE TRIGGER insert_product_log
+AFTER insert
+ON product
+FOR EACH STATEMENT
+EXECUTE FUNCTION  insert_product_record_log();
+

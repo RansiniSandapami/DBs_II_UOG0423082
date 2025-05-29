@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION prevent_price_decrease()
+RETURNS TRIGGER 
+ LANGUAGE plpgsql
+AS $$
+BEGIN 
+RAISE NOTICE 'Price decrease is not allowed. Old price: %, New price: %', OLD.price, NEW.price;
+RETURN NULL;
+END;
+$$;
+
+CREATE TRIGGER prevent_price_decrease()
+BEFORE UPDATE
+ON product
+FOR EACH ROW
+WHEN (NEW.price <= OLD.price)
+EXECUTE FUNCTION prevent_price_decrease();

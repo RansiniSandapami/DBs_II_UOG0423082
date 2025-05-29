@@ -1,0 +1,20 @@
+CREATE OR REPLACE FUNCTION validate_price_function()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+         RAISE NOTICE 'Price must be greater than 0.00 ';
+         RETURN NULL;
+END
+$$;
+
+
+CREATE TRIGGER validate_product_price
+BEFORE INSERT OR UPDATE
+ON product
+FOR EACH ROW
+WHEN (NEW.product_price <= 0.0)
+EXECUTE FUNCTION validate_price_function();
+
+INSERT INTO product (product_name, product_price) VALUES ('book',0.0);
+INSERT INTO product (product_name, product_price) VALUES ('book',10.0);

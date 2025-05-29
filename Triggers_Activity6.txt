@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION log_deleted_product()
+RETURNS TRIGGER 
+ LANGUAGE plpgsql
+AS $$
+BEGIN 
+INSERT INTO unavailable_products(product_id,product_name,price,ActionTime) VALUES(OLD.product_id,OLD.product_name,OLD.price,CURRENT_TIMESTAMP);
+RETURN OLD;
+END;
+$$;
+
+
+CREATE TRIGGER product_deletion_log
+AFTER DELETE
+ON product
+FOR EACH ROW
+EXECUTE FUNCTION product_deletion_log();

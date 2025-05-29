@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION log_employee_insert_function()
+RETURNS TRIGGER 
+ LANGUAGE plpgsql
+AS $$
+BEGIN
+INSERT INTO employee_log(emp_id,action,action_time)
+VALUES (NEW.emp_id,'INSERT' , CURRENT_TIMESTAMP);
+RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER log_employee_insert
+AFTER insert ON employee
+FOR EACH ROW
+EXECUTE FUNCTION  log_employee_insert_function();
+

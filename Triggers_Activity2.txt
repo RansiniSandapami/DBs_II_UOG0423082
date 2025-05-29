@@ -1,0 +1,31 @@
+CREATE TABLE employee (
+    employee_ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY ,
+    employee_name VARCHAR (30),
+    salary DECIMAL
+);
+
+INSERT INTO employee(employee_name,salary)
+        VALUES('Nayana',180000);
+
+UPDATE employee SET salary = salary + 30000
+WHERE employee_name ='Nayana';
+
+SELECT * FROM employee;
+
+
+CREATE FUNCTION increase_salary()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+NEW.salary := NEW.salary + 7500;
+RETURN NEW;
+END
+$$;
+
+CREATE TRIGGER salary_increment
+BEFORE INSERT OR UPDATE
+ON employee
+FOR EACH ROW
+WHEN (NEW.salary > 200000)
+EXECUTE FUNCTION increase_salary();

@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION truncated_total()
+RETURNS TRIGGER 
+ LANGUAGE plpgsql
+AS $$
+DECLARE total_sales DECIMAL (10,2);
+BEGIN 
+SELECT SUM (amount) INTO total_sales
+FROM sales_order;
+INSERT INTO monthly_sales(date,total_amount) VALUES (CURRENT_DATE,total_sales)
+RETURN NULL;
+END;
+$$;
+
+
+CREATE TRIGGER product_truncate
+BEFORE TRUNCATE
+ON sales_order
+FOR EACH STATEMENT
+EXECUTE FUNCTION truncated_total();
+
+TRUNCATE sales_order;
